@@ -1,10 +1,9 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
-import jwt from 'jsonwebtoken';
-
 import { User } from '../models/user';
 import { RequestValidationError } from '../errors/request-validation-error';
 import { BadRequestError } from '../errors/bad-request-error';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -28,23 +27,14 @@ router.post(
 
     const { email, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
-      throw new BadRequestError('Email in use');
-    }
-
     const user = User.build({ email, password });
     await user.save();
 
-    // Generate JWT
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email
-      },
-      'asdf'
-    );
+    //Generate JSON Web Token
+    const userJwt = jwt.sign({
+      id: user.id,
+      email: user.email
+    }, process.env.JWT_KEY!);
 
     // Store it on session object
     req.session = {
@@ -54,5 +44,11 @@ router.post(
     res.status(201).send(user);
   }
 );
+
+router.get('/api/users/signup', async (req: Request, res: Response) => {
+  const docs = await User.find({});
+
+  res.status(200).send(docs);
+});
 
 export { router as signupRouter };

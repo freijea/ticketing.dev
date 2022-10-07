@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
 import { User } from '../models/user';
 import { validateRequest } from '../middlewares/validate-request';
-import jwt from 'jsonwebtoken';
+import { JwtGeneration } from '../services/jwt-generation';
 
 import { validateBody } from '../middlewares/validate-body';
 
@@ -16,16 +15,9 @@ router.post('/api/users/signup',validationType, validateRequest, async (req: Req
     const user = User.build({ email, password });
     await user.save();
 
-    //Generate JSON Web Token
-    const userJwt = jwt.sign({
-      id: user.id,
-      email: user.email
-    }, process.env.JWT_KEY!);
+    const id = user.id;
 
-    // Store it on session object
-    req.session = {
-      jwt: userJwt
-    };
+    JwtGeneration.generate(email, id, req);
 
     res.status(201).send(user);
   }

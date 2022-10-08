@@ -4,7 +4,7 @@ import { validateRequest } from '../middlewares/validate-request';
 import { validateBody } from '../middlewares/validate-body';
 import { BadRequestError } from '../errors/bad-request-error';
 
-import { JwtGeneration } from '../services/jwt-generation';
+import { JwtManager  } from '../services/jwt-generation';
 import { Password } from '../services/password';
 import { User } from '../models/user';
 
@@ -27,9 +27,9 @@ router.post('/api/users/signin', validationType , validateRequest, async (req: R
     throw new BadRequestError('You provide invalid credentials');
   };
 
-  const { id } = existingUser.id;
+  const id = existingUser._id;
 
-  JwtGeneration.generate(email, id, req);
+  JwtManager.generate(email, id, req);
 
   res.status(200).send(existingUser);
 

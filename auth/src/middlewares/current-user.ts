@@ -6,6 +6,7 @@ interface UserPayload {
   email: string;
 }
 
+// Incluir uma nova variável em um objeto já existente
 declare global {
   namespace Express {
     interface Request {

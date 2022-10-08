@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import jwt from 'jsonwebtoken';
 
-export class JwtGeneration {
+export class JwtManager {
   static async generate(email: string, id: string, req: Request) {
 
   //Generate JSON Web Token
@@ -15,5 +15,4 @@ export class JwtGeneration {
     jwt: userJwt
   };
 }
-
 };

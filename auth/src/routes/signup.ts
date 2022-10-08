@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { User } from '../models/user';
 import { validateRequest } from '../middlewares/validate-request';
-import { JwtGeneration } from '../services/jwt-generation';
+import { JwtManager  } from '../services/jwt-generation';
 
 import { validateBody } from '../middlewares/validate-body';
 
@@ -15,9 +15,9 @@ router.post('/api/users/signup',validationType, validateRequest, async (req: Req
     const user = User.build({ email, password });
     await user.save();
 
-    const id = user.id;
+    const id = user._id;
 
-    JwtGeneration.generate(email, id, req);
+    JwtManager.generate(email, id, req);
 
     res.status(201).send(user);
   }

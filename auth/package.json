@@ -7,13 +7,6 @@
     "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll -no-cache"
   },
-  "jest": {
-    "preset": "test-jest",
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "/app/src/test/test-jest.ts"
-    ]
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -32,7 +25,7 @@
     "typescript": "^4.2.4"
   },
   "devDependencies": {
-    "@types/jest": "^29.1.2",
+    "@types/jest": "^29.2.2",
     "@types/supertest": "^2.0.12",
     "jest": "^29.1.2",
     "mongodb-memory-server": "^8.9.3",

@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import { User } from '../models/user';
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest } from '@sitehub-website/common/build';
 import { JwtManager  } from '../services/jwt-generation';
 
-import { validateBody } from '../middlewares/validate-body';
+import { validateBody } from '@sitehub-website/common/build';
 
 const validationType = validateBody(['email', 'passwordSignup']);
 

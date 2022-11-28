@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Password } from '../services/password';
-import { BadRequestError } from '../errors/bad-request-error';
+import { BadRequestError } from '@sitehub-website/common/build';
 
 // An interface that describes the properties
 // that are requried to create a new User

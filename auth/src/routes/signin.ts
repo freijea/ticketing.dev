@@ -1,8 +1,8 @@
 import express, { Request, Response} from 'express';
-import { validateRequest } from '../middlewares/validate-request';
+import { validateRequest } from '@sitehub-website/common/build';
 
-import { validateBody } from '../middlewares/validate-body';
-import { BadRequestError } from '../errors/bad-request-error';
+import { validateBody } from '@sitehub-website/common/build';
+import { BadRequestError } from '@sitehub-website/common/build';
 
 import { JwtManager  } from '../services/jwt-generation';
 import { Password } from '../services/password';

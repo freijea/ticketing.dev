@@ -8,7 +8,11 @@ const start = async () => {
       throw new Error('environment variable is not defined');
     }
 
-    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
+    if (!process.env.MONGO_URI) {
+      throw new Error('environment variable is not defined');
+    }
+
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
 
   } catch (err) {

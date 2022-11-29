@@ -8,7 +8,6 @@ const Header = ({ currentUser }) => {
   ]
     .filter(linkConfig => linkConfig)
     .map(({ label, href }) => {
-      console.log(href);
       return <li key={href} className='nav-item'>
         <Link href={href} className="nav-link">{label}</Link>
       </li>

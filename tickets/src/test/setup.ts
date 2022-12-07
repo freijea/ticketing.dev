@@ -1,6 +1,16 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+
+interface Domain {
+  domain: string;
+}
+
+const randomEmailGenerator = (obj : Domain) => {
+  let str = crypto.randomBytes(10).toString('hex');
+  return `${str}@${obj.domain}`
+};
 
 declare global {
   var signin: () => string[];
@@ -33,9 +43,10 @@ afterAll(async () => {
 
 global.signin = () => {
   // Build a JWT payload.  { id, email }
+
   const payload = {
-    id: '1lk24j124l',
-    email: 'test@test.com',
+    id: new mongoose.Types.ObjectId().toHexString(),
+    email: randomEmailGenerator({domain: 'webemail.com.br'})
   };
 
   // Create the JWT!

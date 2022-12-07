@@ -10,6 +10,8 @@ import { currentUser } from "@sitehub-website/common/build/";
 //routes
 import { createTicketRouter } from "./routes/new";
 import { showTicketRouter } from "./routes/show";
+import { indexTicketRouter } from "./routes";
+import { updateTicketRouter } from "./routes/update";
 
 const app = express();
 app.use(json());
@@ -24,8 +26,10 @@ app.use(
 app.use(currentUser);
 
 //routes handlers config
+app.use(indexTicketRouter);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
+app.use(updateTicketRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();

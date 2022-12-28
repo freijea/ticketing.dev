@@ -22,3 +22,5 @@ stan.on('connect', () => {
 });
 
 /// kubectl port-forward nats-depl-564558c478-jjxlj 4222:4222
+/// kubectl port-forward nats-depl-564558c478-jjxlj 8222:8222
+/// http://localhost:8222/streaming

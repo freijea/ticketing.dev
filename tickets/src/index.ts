@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
   try {
@@ -12,6 +13,15 @@ const start = async () => {
       throw new Error ('environment variable is not defined');
     }
 
+    await natsWrapper.connect('ticketing', 'laskf', 'http://nats-srv:4222');
+    natsWrapper.client.on('close', () => {
+      console.log('NATS connection closed!');
+      process.exit();
+    });
+    process.on('SIGINT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
+    
+    mongoose.set("strictQuery", true);
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to MongoDb");
 

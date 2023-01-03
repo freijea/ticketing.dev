@@ -5,6 +5,8 @@ import { validateRequest } from '@sitehub-website/common/build';
 import { NotFoundError } from '@sitehub-website/common/build';
 import { requireAuth } from '@sitehub-website/common/build';
 import { NotAuthorizedError } from '@sitehub-website/common/build';
+import { TicketUpdatedPublisher } from '../events/publisher/ticket-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -31,6 +33,14 @@ router.put('/api/tickets/:id', requireAuth, [
 
   await ticket.save();
 
+  new TicketUpdatedPublisher(natsWrapper.client).publish({
+    id: ticket.id,
+    title: ticket.title,
+    price: ticket.price,
+    userId: ticket.userId
+  });
+
+  
   res.send(ticket);
   
 });

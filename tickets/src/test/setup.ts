@@ -22,7 +22,7 @@ let mongo: any;
 
 beforeAll( async() => {
   process.env.JWT_KEY = 'asdfasdf';
-
+  mongoose.set("strictQuery", true);
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
   await mongoose.connect(mongoUri, {});

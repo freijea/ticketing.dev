@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@sitehub-website/common/build";
+import { TicketDoc } from "./ticket";
+
+export { OrderStatus }
 
 interface OrderAttrs {
   userId: string;
@@ -13,7 +16,6 @@ interface OrderDoc extends mongoose.Document {
   status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc;
-};
 };
 
 interface OrderModel extends mongoose.Model<OrderDoc> {

@@ -31,6 +31,8 @@ spec:
               valueFrom: 
                 fieldRef:
                   fieldPath: metadata.name
+            - name: NATS_QUEUEGROUP_NAME
+              value: orders-service
 
 ---
 apiVersion: v1

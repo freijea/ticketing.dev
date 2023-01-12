@@ -1,6 +1,6 @@
 import mongoose, { mongo } from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuidv4 } from 'uuid';
 
 interface TicketAttrs {
   title: string;

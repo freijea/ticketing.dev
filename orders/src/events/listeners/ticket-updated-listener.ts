@@ -7,7 +7,10 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   queueGroupName = process.env.NATS_QUEUEGROUP_NAME!;
   async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
     const { id, title, price } = data;
-    const ticket = await Ticket.findById(id);
+    const ticket = await Ticket.findOne({
+      _id: id,
+      version: data.version - 1
+    })
     
     if(!ticket) {
       throw new Error('Ticket not found');

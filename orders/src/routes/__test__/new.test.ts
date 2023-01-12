@@ -5,9 +5,10 @@ import { Order } from '../../models/order';
 import { Ticket } from '../../models/ticket';
 import { OrderStatus } from '../../models/order';
 import { natsWrapper } from '../../nats-wrapper';
+import {v4 as uuidv4 } from 'uuid';
 
 it('returns an error if the ticket does not exist', async () => {
-  const ticketId = await new mongoose.Types.ObjectId();
+  const ticketId = uuidv4();
 
   await request(app).post('/api/orders').set('Cookie', global.signin()).send({
     ticketId
@@ -17,6 +18,7 @@ it('returns an error if the ticket does not exist', async () => {
 
 it('return an error if the ticket is reserverd', async () => {
   const ticket = Ticket.build({
+    id: uuidv4(),
     title: 'NEW CONCERT',
     price: 20
   });
@@ -42,6 +44,7 @@ it('return an error if the ticket is reserverd', async () => {
 
 it('reserves a ticket', async () => {
   const ticket = Ticket.build({
+    id: uuidv4(),
     title: 'concert',
     price: 20
   });
@@ -56,6 +59,7 @@ it('reserves a ticket', async () => {
 
 it('emits an order created event', async () => {
   const ticket = Ticket.build({
+    id: uuidv4(),
     title: 'concert',
     price: 20
   });

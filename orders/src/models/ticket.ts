@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 import { Order, OrderStatus } from "./order";
+import {v4 as uuidv4 } from 'uuid';
 
 interface TicketAttrs {
   id: string;
@@ -10,6 +12,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
+  version: number;
   isReserved(): Promise<boolean>;
 };
 
@@ -18,6 +21,7 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 };  
 
 const ticketSchema = new mongoose.Schema({
+  _id: { type: String, default: uuidv4 },
   title: {
     type: String,
     required: true
@@ -37,9 +41,12 @@ const ticketSchema = new mongoose.Schema({
   }
 });
 
+ticketSchema.set('versionKey', 'version');
+ticketSchema.plugin(updateIfCurrentPlugin);
+
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket({
-    _id: attrs.id,
+    _id:  attrs.id,
     title: attrs.title,
     price: attrs.price
   });

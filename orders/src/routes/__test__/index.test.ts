@@ -1,9 +1,11 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
+import {v4 as uuidv4 } from 'uuid';
 
 const buildTicket = async () => {
   const ticket = Ticket.build({
+    id: uuidv4(),
     title: "Concert",
     price: 20
   });

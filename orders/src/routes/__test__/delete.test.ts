@@ -2,9 +2,11 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 import { natsWrapper } from '../../nats-wrapper';
+import {v4 as uuidv4 } from 'uuid';
 
 it('marks an order as cancelled', async () => {
   const ticket = Ticket.build({
+    id: uuidv4(),
     title: 'New concert',
     price: 20
   });
@@ -35,6 +37,7 @@ it('marks an order as cancelled', async () => {
 it('emits a order cancelled event', async () => {
 
   const ticket = Ticket.build({
+    id: uuidv4(),
     title: 'New concert',
     price: 20
   });

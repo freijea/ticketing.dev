@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@sitehub-website/common/build";
 import { TicketDoc } from "./ticket";
+import {v4 as uuidv4 } from 'uuid';
 
 export { OrderStatus }
 
@@ -23,6 +24,7 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 };
 
 const orderSchema = new mongoose.Schema({
+  _id: { type: String, default: uuidv4 },
   userId: {
     type: String,
     required: true
@@ -36,10 +38,7 @@ const orderSchema = new mongoose.Schema({
   expiresAt: {
     type: mongoose.Schema.Types.Date
   },
-  ticket: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Ticket'
-  }
+  ticket: { type: String, default: uuidv4, ref: 'Ticket' }
 }, {
   toJSON: {
     transform(doc, ret) {
@@ -51,10 +50,15 @@ const orderSchema = new mongoose.Schema({
 });
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
-  return new Order(attrs);
+  return new Order({
+    _id: uuidv4(),
+    userId: attrs.userId,
+    status: attrs.status,
+    expiresAt: attrs.expiresAt,
+    ticket: attrs.ticket
+  });
 };
 
 const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
 
 export { Order };
-

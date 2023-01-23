@@ -27,6 +27,8 @@ spec:
               value: "http://nats-srv:4222"
             - name: NATS_CLUSTER_ID
               value: ticketing
+            - name: NATS_QUEUEGROUP_NAME
+              value: tickets-service
             - name: NATS_CLIENT_ID
               valueFrom: 
                 fieldRef:

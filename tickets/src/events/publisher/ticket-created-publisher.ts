@@ -2,5 +2,4 @@ import { Publisher, Subjects, TicketCreatedEvent } from "@sitehub-website/common
 
 export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
   readonly subject = Subjects.TicketCreated;
-  
 };

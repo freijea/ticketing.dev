@@ -9,8 +9,9 @@ import { natsWrapper } from '../nats-wrapper';
 import { validate } from 'uuid';
 
 const router = express.Router();
-const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+const EXPIRATION_WINDOW_SECONDS = 60;
 
+console.log(process.env.NATS_QUEUEGROUP_NAME!)
 router.post(
   '/api/orders',
   requireAuth,

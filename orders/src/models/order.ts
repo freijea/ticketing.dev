@@ -38,7 +38,7 @@ const orderSchema = new mongoose.Schema({
     default: OrderStatus.Created
   },
   expiresAt: {
-    type: mongoose.Schema.Types.Date
+    type: mongoose.Schema.Types.Date,
   },
   ticket: { type: String, default: uuidv4, ref: 'Ticket' }
 }, {

@@ -1,6 +1,7 @@
 import { Message } from "node-nats-streaming";
 import { Listener, OrderCreatedEvent, Subjects } from "@sitehub-website/common/build";
 import { Ticket } from "../../../models/tickets";
+import { TicketUpdatedPublisher } from "../ticket-updated-publisher";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   readonly subject = Subjects.OrderCreated;
@@ -14,6 +15,15 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 
     ticket.set({ orderId: data.id });
     await ticket.save();
+
+    await new TicketUpdatedPublisher(this.client).publish({
+      id: ticket.id,
+      price: ticket.price,
+      title: ticket.title,
+      userId: ticket.userId,
+      orderId: ticket.orderId,
+      version: ticket.version
+    });
 
     msg.ack();
   };

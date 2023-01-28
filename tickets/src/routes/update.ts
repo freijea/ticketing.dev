@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { Ticket } from '../models/tickets';
 import { body } from 'express-validator';
-import { validateRequest } from '@sitehub-website/common/build';
+import { BadRequestError, validateRequest } from '@sitehub-website/common/build';
 import { NotFoundError } from '@sitehub-website/common/build';
 import { requireAuth } from '@sitehub-website/common/build';
 import { NotAuthorizedError } from '@sitehub-website/common/build';
@@ -24,6 +24,10 @@ router.put('/api/tickets/:id', requireAuth, [
 
   if(ticket.userId !== req.currentUser!.id) {
     throw new NotAuthorizedError();
+  }
+
+  if(ticket.orderId) {
+    throw new BadRequestError('Cannot edit a reserved ticket!');
   }
 
   ticket.set({

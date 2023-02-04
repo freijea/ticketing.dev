@@ -27,6 +27,9 @@ const start = async () => {
       throw new Error ('environment variable is not defined');
     }
 
+    if(!process.env.STRIPE_KEY) {
+      throw new Error(`STRIPE_KEY variable is not defined`);
+    }
 
     await natsWrapper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL);
     natsWrapper.client.on('close', () => {

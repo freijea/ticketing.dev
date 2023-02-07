@@ -15,6 +15,12 @@ spec:
       containers:
         - name: client
           image: jsfreitas/client
+          env:
+            - name: STRIPE_PUBLISHER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-app
+                  key: STRIPE_PUBLISHER_KEY            
 
 ---
 apiVersion: v1

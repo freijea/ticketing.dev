@@ -19,3 +19,4 @@ https://www.alura.com.br/artigos/rest-principios-e-boas-praticas?gclid=Cj0KCQiA3
 
 # Git create a new branch
 git checkout -b dev
+git push origin dev

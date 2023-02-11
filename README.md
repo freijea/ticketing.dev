@@ -21,3 +21,15 @@ https://www.alura.com.br/artigos/rest-principios-e-boas-praticas?gclid=Cj0KCQiA3
 git checkout -b dev
 git push origin dev
 git checkout dev (change to an existing branch)
+
+# to connect to Digital Ocean
+doctl auth init
+
+# to run a kubernet cluster
+doctl kubernetes cluster kubeconfig save <the same name of the cluster in Digital Ocean>
+
+doctl kubernetes cluster kubeconfig save ticketing
+
+# to run the kubernetes cluster locally
+kubectl config view
+kubectl config use-context docker-desktop

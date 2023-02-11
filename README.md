@@ -33,3 +33,6 @@ doctl kubernetes cluster kubeconfig save ticketing
 # to run the kubernetes cluster locally
 kubectl config view
 kubectl config use-context docker-desktop
+
+# In the config use-context digital ocean apply ingress-nginx:
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/do/deploy.yaml
